@@ -10,6 +10,8 @@ This project implements a **Multi-Agent AI Clinical Decision Support System** us
 
 The system uses **embeddings models** (SapBERT, SciBERT, BioBERT, All-Mini, All-MPNet, Multi-Mini-qa), **vector databases** (FAISS, Qdrant), and **API-based LLMs** (GPT-4o, Claude Sonent 4) to provide context-aware clinical recommendations.
 
+This repository implements a multi-agent AI clinical decision support system using LLMs. The system allows automated diagnosis and treatment plan generation based on patient cases and histories. It supports multiple embeddings, vector databases, and Top-K retrieval configurations, ensuring full reproducibility for research and peer review.
+
 ## Dataset Information
 
 **Dataset Name:** PubMedQA [(PQAa)](https://drive.google.com/open?id=15v1x6aQDlZymaHGP7cZJZZYFfeJt2NdS)  
@@ -115,3 +117,41 @@ For each combination of LLM, embedding model, vector database, and Top-K value:
 5. Evaluate outputs against PubMedQA test set  
 
 This systematic approach allows a **comparative analysis** to determine the optimal setup for clinical QA accuracy.
+
+
+## Usage Instructions
+### 1. Clone the repository
+
+git clone https://github.com/yourusername/Multi-Agent-AI-Clinical-Decision-Support-System-Using-LLMs.git
+cd Multi-Agent-AI-Clinical-Decision-Support-System-Using-LLMs
+
+### 2. Install required libraries
+
+pip install -r requirements.txt
+
+### 3. Run dataset preprocessing, embeddings generation, and indexing
+
+1. Preprocess datasets
+2. Generate embeddings
+3. Index embeddings using FAISS or Qdrant
+
+### 4. Run the Streamlit application
+
+streamlit run ClaudeSAPBertFinetuned_testcontext93.py
+
+### 5. Input patient case and history (if available)
+### 6. Deploy via Ngrok for external access.
+### 7. Enter patient case in UI anf Click "Run Diagnosis" to generate a diagnosis and treatment plan.
+
+## Requirements
+- Python 3.9+
+- Libraries:
+streamlit, sentence-transformers, faiss, numpy, scikit-learn, tqdm, langchain_anthropic, langgraph, re
+- Pretrained and fientuned embeddings: SapBERT, SciBERT, BioBERT, allMini, AllMPNet, Multi-mini-qa
+- Vector database: FAISS or Qdrant
+- Dataset: PubMedQA (PQAa)
+
+## Reproducibility
+- All code, datasets, embeddings, and index files are versioned and included.
+- Experimental setup ensures every combination of LLM, embedding, vector database, and Top-K retrieval is reproducible.
+- Fully reproducible for peer review and validation.
