@@ -63,5 +63,55 @@ Main Kaggle notebook performing:
 ### 4. Note: Finetuned files with both vector databases are attached because search function of both databases were different.
 
 
+## Workflow & Methodology
 
+### Dataset Preprocessing
+- Load PubMedQA dataset  
+- Extract nested fields: question, context, long answer  
+- Combine question + abstract sentences for embedding generation  
 
+### Embedding Generation
+- Pretrained models: SapBERT, SciBERT, BioBERT, All-MiniLM, All-MPNet, Multi-qa-MiniLM  
+- Generate vector embeddings for each sample  
+- Save embeddings for indexing  
+
+### Vector Database Indexing
+- FAISS or Qdrant used for fast similarity search  
+- Create indexes for all embeddings  
+- Support retrieval with Top-K values (10–50)  
+
+### Streamlit Multi-Agent Workflow
+- **History Node:** Processes prior patient history  
+- **Diagnosis Node:** Uses LLM and retrieved PubMed contexts to generate 3 diagnoses  
+- **Treatment Node:** Uses LLM, retrieved contexts, and generated diagnoses to generate step-by-step treatment plan  
+- **UI:** User inputs patient case, optional history, clicks "Run Diagnosis" to receive results  
+
+### Evaluation
+- Compare generated outputs with PubMedQA test dataset  
+- Compute cosine similarity of embeddings between generated outputs and ground-truth PubMed passages  
+- Evaluate case, diagnosis, and treatment separately  
+
+### Fine-Tuning
+- Fine-tune embedding models using PubMedQA dataset  
+- Repeat process with embedding generation with finetuned models → indexing → retrieval → evaluation workflow for improved performance  
+
+---
+
+## Experimental Design
+
+| Elements | Values |
+|----------|--------|
+| API-based LLMs | GPT-4o, Claude Sonent 4 |
+| Embedding Models | 3 General-purpose (All-MiniLM, All-MPNet, Multi-qa-MiniLM) <br> 3 Domain-specific (SapBERT, SciBERT, BioBERT) |
+| Vector Databases | FAISS, Qdrant |
+| Top-K Retrieval Values | 10, 15, 20, 25, 30, 35, 40, 45, 50 |
+
+**Procedure:**  
+For each combination of LLM, embedding model, vector database, and Top-K value:  
+1. Preprocess dataset  
+2. Generate embeddings  
+3. Index embeddings in the vector database  
+4. Run Streamlit workflow  
+5. Evaluate outputs against PubMedQA test set  
+
+This systematic approach allows a **comparative analysis** to determine the optimal setup for clinical QA accuracy.
